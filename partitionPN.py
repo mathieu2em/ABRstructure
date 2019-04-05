@@ -51,6 +51,41 @@ class BinaryTree:
         else:
             return node
 
+    def deleteMin(self):
+        if self.root is None:
+            return
+        self.root = self._deleteMin(self)
+
+    def _deleteMin(self, node):
+        if node.left is None:
+            return node
+        else:
+            node.left = self._deleteMin(self, node.left)
+            node.n = self.__size__(node.left) + self.__size__(node.right) + 1
+            return node
+
+    def delete(self, key):
+        root = self._delete(self.root, key)
+
+    def _delete(self, node, key):
+        if node is None:
+            return None
+        if key > node.key:
+            node.right = self._delete(node.right, key)
+        elif node.key < key:
+            node.left = self._delete(node.left, key)
+        else:
+            if node.right is None:
+                return node.left
+            if node.left is None:
+                return node.right
+            tNode = node
+            node = min(tNode.right)
+            node.right = self._deleteMin(tNode.right)
+            node.left = tNode.left
+        node.N = self.__size__(node.left) + self.__size__(node.right)
+        return node
+
     def printBST(self):
         if self.root is None:
             print('empty')
@@ -104,9 +139,10 @@ class PartitionPN:
             msb = x
             mss = None
             return self.__search__(root.left, x, mss, msb)
-    #helper method RECHERCHER
+
+    # helper method RECHERCHER
     def __search__(self, node, x, mss, msb):
-        if node is None :
+        if node is None:
             return mss, msb
         elif x < node.value < msb:
             msb = node.value
@@ -115,11 +151,7 @@ class PartitionPN:
             mss = node.value
             return self.__search__(node.right, x, mss, msb)
 
-    #def fusion(self,x):
-
-
-
-
+    # def fusion(self,x):
 
 
 bt = BinaryTree()
