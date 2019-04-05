@@ -85,7 +85,7 @@ class BinaryTree:
             node.left = tNode.left
         node.N = self.__size__(node.left) + self.__size__(node.right)
         return node
-
+    #test
     def printBST(self):
         if self.root is None:
             print('empty')
