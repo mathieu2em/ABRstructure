@@ -1,10 +1,13 @@
+import math
+
+
 class BinaryTree:
     def __init__(self, root=None):
         self.root = root
 
     # class for individual nodes
     class Node:
-        def __init__(self, key=None, value=None, N=None, left=None, right=None):
+        def __init__(self, key=None, value=None, N=0, left=None, right=None):
             self.right = right
             self.left = left
             self.value = value
@@ -25,13 +28,15 @@ class BinaryTree:
 
     def __put__(self, node, key, val):
         if node is None:
-            return self.Node(key, val)
+            return self.Node(key, val, 1)
         if key < node.key:
             node.left = self.__put__(node.left, key, val)
         elif key > node.key:
             node.right = self.__put__(node.right, key, val)
         else:
             node.value = val
+        node.N = self.__size__(node.left) + self.__size__(node.right)
+        return node
 
     def get(self, key):
         return self.__get__(self.root, key)
@@ -46,6 +51,22 @@ class BinaryTree:
         else:
             return node
 
+    def printBST(self):
+        if self.root is None:
+            print('empty')
+        else:
+            print(self.root.value)
+            self.__printBST__(self.root.left)
+            self.__printBST__(self.root.right)
+
+    def __printBST__(self, node):
+        if node is None:
+            print('empty')
+        else:
+            print(node.value)
+            self.__printBST__(node.left)
+            self.__printBST__(node.right)
+
 
 class PartitionPN:
     # We will use a BST to represent our partition of positive numbers from 0(included) to m(excluded)
@@ -57,11 +78,52 @@ class PartitionPN:
     # to the left or our own node if the node to the left is null . and the right number is the actual node.
     def __init__(self, m):
         self.BT = BinaryTree(self)
+        self.smallest = 0
+        self.biggest = m
+        self.BT.root = BinaryTree.Node(0, 0, 1)
 
     # return interval [Xi-1, Xi[ containing x
-    def recherche(self,x):
+    # while searching it will always keep in mind the latest bigger than x visited
+    # so that when arriving in front of a smaller while having a bigger in memory it will
+    # return the partition from the smaller to the one in memory
+    # METHODE RECHERCHER
+    def search(self, x):
+        root = self.BT.root
+        if root.value > x:
+            # most significant bigger
+            msb = root.value
+            # most significant smaller still not defined
+            mss = 0
+            return self.__search__(root.left, x, mss, msb)
+        elif root.value < x:
+            # most significant bigger
+            msb = None
+            mss = root.value
+            return self.__search__(root.right, x, mss, msb)
+        else:  # x == root.value
+            msb = x
+            mss = None
+            return self.__search__(root.left, x, mss, msb)
+    #helper method RECHERCHER
+    def __search__(self, node, x, mss, msb):
+        if node is None :
+            return mss, msb
+        elif x < node.value < msb:
+            msb = node.value
+            return self.__search__(node.left, x, mss, msb)
+        elif x > node.value > mss:
+            mss = node.value
+            return self.__search__(node.right, x, mss, msb)
+
+    def fusion(self,x):
 
 
 
-if __name__ is '__main__':
-    partition = PartitionPN()
+
+
+
+bt = BinaryTree()
+bt.put(5, 'test')
+bt.put(8, 'test3')
+bt.put(3, 'test2')
+bt.printBST()
