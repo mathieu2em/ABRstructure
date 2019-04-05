@@ -115,7 +115,7 @@ class PartitionPN:
             mss = node.value
             return self.__search__(node.right, x, mss, msb)
 
-    def fusion(self,x):
+    #def fusion(self,x):
 
 
 
