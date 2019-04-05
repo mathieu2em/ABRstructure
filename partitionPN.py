@@ -48,11 +48,19 @@ class BinaryTree:
 
 
 class PartitionPN:
-    # we want a partition of size m in which each node contains a suite
-    # of numbers for Xi to Xi+1 Xi is the key and Xi+1 is the value
-    # we need to define the size of
+    # We will use a BST to represent our partition of positive numbers from 0(included) to m(excluded)
+    # each node of the BST will represent a split in the partition.
+    # for example if we have a partition composed of one continuous
+    # suite of positive numbers from
+    # [0 , 100[ will have two nodes : the root will be 100 and the left node will be 0.
+    # to know the size of an interval , the left number ( here zero ) is represented by the node
+    # to the left or our own node if the node to the left is null . and the right number is the actual node.
     def __init__(self, m):
         self.BT = BinaryTree(self)
+
+    # return interval [Xi-1, Xi[ containing x
+    def recherche(self,x):
+
 
 
 if __name__ is '__main__':
