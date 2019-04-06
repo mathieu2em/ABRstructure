@@ -85,7 +85,7 @@ class BinaryTree:
             node.left = tNode.left
         node.N = self.__size__(node.left) + self.__size__(node.right)
         return node
-    #test
+
     def printBST(self):
         if self.root is None:
             print('empty')
@@ -115,43 +115,44 @@ class PartitionPN:
         self.BT = BinaryTree(self)
         self.smallest = 0
         self.biggest = m
-        self.BT.root = BinaryTree.Node(0, 0, 1)
+
+    def getSmallest(self):
+        return self.smallest
+
+    def getBiggest(self):
+        return self.biggest
 
     # return interval [Xi-1, Xi[ containing x
     # while searching it will always keep in mind the latest bigger than x visited
     # so that when arriving in front of a smaller while having a bigger in memory it will
     # return the partition from the smaller to the one in memory
     # METHODE RECHERCHER
-    def search(self, x):
-        root = self.BT.root
-        if root.value > x:
-            # most significant bigger
-            msb = root.value
-            # most significant smaller still not defined
-            mss = 0
-            return self.__search__(root.left, x, mss, msb)
-        elif root.value < x:
-            # most significant bigger
-            msb = None
-            mss = root.value
-            return self.__search__(root.right, x, mss, msb)
-        else:  # x == root.value
-            msb = x
-            mss = None
-            return self.__search__(root.left, x, mss, msb)
+    def rechercher(self, x):
+        return self.__rechercher__(self.BT.root, x)
 
     # helper method RECHERCHER
-    def __search__(self, node, x, mss, msb):
+    def __rechercher__(self, node, x, mss=getSmallest(), msb=getBiggest()):
         if node is None:
+            print("for "+ x +" : [ " + mss + " , " + msb + " [ ")
             return mss, msb
-        elif x < node.value < msb:
-            msb = node.value
-            return self.__search__(node.left, x, mss, msb)
-        elif x > node.value > mss:
-            mss = node.value
-            return self.__search__(node.right, x, mss, msb)
+        elif x < node.key:
+            msb = node.key
+            return self.__rechercher__(node.left, x, mss, msb)
+        elif x > node.value:
+            mss = node.key
+            return self.__rechercher__(node.right, x, mss, msb)
 
-    # def fusion(self,x):
+    def fusion(self,x):
+        if x == self.biggest:
+            self.biggest = math.inf
+            return
+        self.BT.delete(x)
+        return
+
+
+
+
+
 
 
 bt = BinaryTree()
