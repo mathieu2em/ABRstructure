@@ -152,6 +152,14 @@ class PartitionPN:
         self.BT.delete((self.rechercher(x))[1])
         return
 
+    # the tranche function will split the partition into two smaller ones the one to the left excluding x and the one
+    # to right including it. The way it will do so is simply like a normal put(x) . it will search to the right place
+    # in the tree and place the node there. It is important to keep in mind that the binary search tree serves as a
+    # representation of the splitting positions in our partition. and that the smallest element and biggest wich are
+    # set up at the creation of the partition are kept separatey in "biggest" and "smallest" . by doing so we insure
+    # that the tree will be more balanced
+    def tranche(self,x):
+
 
 bt = BinaryTree()
 bt.put(5, 'test')
