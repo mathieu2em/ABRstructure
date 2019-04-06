@@ -151,7 +151,7 @@ class PartitionPN:
     # BST class
     def fusion(self, x):
         if x == self.biggest:
-            self.biggest = math.inf
+            return
         self.BT.delete(self.rechercher(x)[0])
         return
 
@@ -178,17 +178,13 @@ class MainTest:
     @staticmethod
     def testpartition(m):
         partition = PartitionPN(m)
-        partition.fusion(m)
-        partition.rechercher(6)
-        partition.tranche(10)
-        partition.rechercher(6)
-        partition.rechercher(10)
-        partition.rechercher(11)
-        partition.tranche(2)
-        partition.tranche(8)
-        partition.rechercher(7)
+        partition.tranche(100)
+        partition.fusion(101)
+        partition.BT.printBST()
+        partition.fusion(100)
         partition.BT.printBST()
 
 
+
 #MainTest.testBT()
-MainTest.testpartition(99)
+MainTest.testpartition(math.inf)
