@@ -142,9 +142,12 @@ class PartitionPN:
         elif x < node.key:
             msb = node.key
             return self.__rechercher__(node.left, x, mss, msb)
-        elif x >= node.value:
+        elif node.value <= x < msb:
             mss = node.key
             return self.__rechercher__(node.right, x, mss, msb)
+        else:
+            print("error")
+            return
 
     # this method will search for a certain interval and delete the node between this interval and the one bigger
     # than him. it will use the same pattern as search and then delete the correct node using the delete method from
@@ -178,13 +181,11 @@ class MainTest:
     @staticmethod
     def testpartition(m):
         partition = PartitionPN(m)
-        partition.tranche(100)
-        partition.fusion(101)
-        partition.BT.printBST()
-        partition.fusion(100)
-        partition.BT.printBST()
+        partition.rechercher(m)
+        partition.rechercher(m-1)
+
 
 
 
 #MainTest.testBT()
-MainTest.testpartition(math.inf)
+MainTest.testpartition(100)
