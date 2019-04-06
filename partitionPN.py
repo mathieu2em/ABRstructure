@@ -133,7 +133,7 @@ class PartitionPN:
     # helper method RECHERCHER
     def __rechercher__(self, node, x, mss=getSmallest(), msb=getBiggest()):
         if node is None:
-            print("for "+ x +" : [ " + mss + " , " + msb + " [ ")
+            print("for " + x + " : [ " + mss + " , " + msb + " [ ")
             return mss, msb
         elif x < node.key:
             msb = node.key
@@ -142,17 +142,15 @@ class PartitionPN:
             mss = node.key
             return self.__rechercher__(node.right, x, mss, msb)
 
-    def fusion(self,x):
+    # this method will search for a certain interval and delete the node between this interval and the one bigger
+    # than him. it will use the same pattern as search and then delete the correct node using the delete method from
+    # BST class
+    def fusion(self, x):
         if x == self.biggest:
             self.biggest = math.inf
             return
-        self.BT.delete(x)
+        self.BT.delete((self.rechercher(x))[1])
         return
-
-
-
-
-
 
 
 bt = BinaryTree()
