@@ -2,8 +2,8 @@ import math
 
 
 class BinaryTree:
-    def __init__(self, root=None):
-        self.root = root
+    def __init__(self, rootkey, rootvalue=0):
+        self.root = BinaryTree.Node(rootkey,rootvalue)
 
     # class for individual nodes
     class Node:
@@ -65,7 +65,7 @@ class BinaryTree:
             return node
 
     def delete(self, key):
-        root = self._delete(self.root, key)
+        self.root = self._delete(self.root, key)
 
     def _delete(self, node, key):
         if node is None:
@@ -104,6 +104,7 @@ class BinaryTree:
 
 
 class PartitionPN:
+
     # We will use a BST to represent our partition of positive numbers from 0(included) to m(excluded)
     # each node of the BST will represent a split in the partition.
     # for example if we have a partition composed of one continuous
@@ -112,7 +113,8 @@ class PartitionPN:
     # to know the size of an interval , the left number ( here zero ) is represented by the node
     # to the left or our own node if the node to the left is null . and the right number is the actual node.
     def __init__(self, m):
-        self.BT = BinaryTree(self)
+
+        self.BT = BinaryTree(m,m)
         self.smallest = 0
         self.biggest = m
 
@@ -131,14 +133,16 @@ class PartitionPN:
         return self.__rechercher__(self.BT.root, x)
 
     # helper method RECHERCHER
-    def __rechercher__(self, node, x, mss=getSmallest(), msb=getBiggest()):
+    def __rechercher__(self, node, x, mss=None, msb=None):
+        if mss is None: mss = self.getSmallest()
+        if msb is None: msb = self.getBiggest()
         if node is None:
-            print("for " + x + " : [ " + mss + " , " + msb + " [ ")
+            print("for " + str(x) + " : [ " + str(mss) + " , " + str(msb) + " [ ")
             return mss, msb
         elif x < node.key:
             msb = node.key
             return self.__rechercher__(node.left, x, mss, msb)
-        elif x > node.value:
+        elif x >= node.value:
             mss = node.key
             return self.__rechercher__(node.right, x, mss, msb)
 
@@ -148,8 +152,7 @@ class PartitionPN:
     def fusion(self, x):
         if x == self.biggest:
             self.biggest = math.inf
-            return
-        self.BT.delete((self.rechercher(x))[1])
+        self.BT.delete(self.rechercher(x)[0])
         return
 
     # the tranche function will split the partition into two smaller ones the one to the left excluding x and the one
@@ -158,11 +161,34 @@ class PartitionPN:
     # representation of the splitting positions in our partition. and that the smallest element and biggest wich are
     # set up at the creation of the partition are kept separatey in "biggest" and "smallest" . by doing so we insure
     # that the tree will be more balanced
-    def tranche(self,x):
+    def tranche(self, x):
+        self.BT.put(x, x)
 
 
-bt = BinaryTree()
-bt.put(5, 'test')
-bt.put(8, 'test3')
-bt.put(3, 'test2')
-bt.printBST()
+class MainTest:
+
+    @staticmethod
+    def testBT():
+        bintree = BinaryTree(6,6)
+        bintree.put(5, 5)
+        bintree.put(3, 3)
+        bintree.put(7, 7)
+        bintree.printBST()
+
+    @staticmethod
+    def testpartition(m):
+        partition = PartitionPN(m)
+        partition.fusion(m)
+        partition.rechercher(6)
+        partition.tranche(10)
+        partition.rechercher(6)
+        partition.rechercher(10)
+        partition.rechercher(11)
+        partition.tranche(2)
+        partition.tranche(8)
+        partition.rechercher(7)
+        partition.BT.printBST()
+
+
+#MainTest.testBT()
+MainTest.testpartition(99)
