@@ -65,11 +65,6 @@ class BinaryTree:
             self.postfixTraversal(node.right)
             print(node.value)
 
-    def notfixTraversal(self, node):
-        if node is not None:
-            self.notfixTraversal(node.left)
-            print(node.value)
-            self.notfixTraversal(node.right)
 
     def deleteMin(self):
         if self.root is None:
@@ -204,8 +199,6 @@ class MainTest:
         bintree.postfixTraversal(bintree.root)
         print("\n")
         bintree.prefixTraversal(bintree.root)
-        print("\n")
-        bintree.notfixTraversal(bintree.root)
     @staticmethod
     def testpartition(m):
         partition = PartitionPN(m)
