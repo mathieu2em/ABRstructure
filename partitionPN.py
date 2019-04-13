@@ -51,6 +51,18 @@ class BinaryTree:
         else:
             return node
 
+    # iterative way of getting a node value
+    def getIter(self, node , key):
+        while node is not None and key != node.key:
+            if key < node.key:
+                node = node.left
+            else:
+                node = node.right
+        if node is None:
+            return None
+        else:
+            return node.value
+
     # tree traversal using postfix method
     def prefixTraversal(self, node):
         if node is not None:
