@@ -1,4 +1,3 @@
-# suce moer
 import math
 
 
