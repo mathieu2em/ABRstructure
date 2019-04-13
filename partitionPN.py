@@ -51,6 +51,24 @@ class BinaryTree:
         else:
             return node
 
+    # return node with smallest key
+    def min(self, r):
+        x = r
+        y = None
+        while x is not None:
+            y = x
+            x = x.left
+        return y
+
+    #r return node with biggest key
+    def max(self, r):
+        x = r
+        y = None
+        while x is not None:
+            y = x
+            x = x.right
+        return y
+
     # iterative way of getting a node value
     def getIter(self, node , key):
         while node is not None and key != node.key:
