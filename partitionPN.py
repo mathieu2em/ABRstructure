@@ -1,9 +1,10 @@
-#suce moer
+# suce moer
 import math
+
 
 class BinaryTree:
     def __init__(self, rootkey, rootvalue=0):
-        self.root = BinaryTree.Node(rootkey,rootvalue)
+        self.root = BinaryTree.Node(rootkey, rootvalue)
 
     # class for individual nodes
     class Node:
@@ -50,6 +51,25 @@ class BinaryTree:
             return self.__get__(node.right, key)
         else:
             return node
+
+    # tree traversal using postfix method
+    def prefixTraversal(self, node):
+        if node is not None:
+            print(node.value)
+            self.prefixTraversal(node.left)
+            self.prefixTraversal(node.right)
+
+    def postfixTraversal(self, node):
+        if node is not None:
+            self.postfixTraversal(node.left)
+            self.postfixTraversal(node.right)
+            print(node.value)
+
+    def notfixTraversal(self, node):
+        if node is not None:
+            self.notfixTraversal(node.left)
+            print(node.value)
+            self.notfixTraversal(node.right)
 
     def deleteMin(self):
         if self.root is None:
@@ -102,6 +122,7 @@ class BinaryTree:
             self.__printBST__(node.left)
             self.__printBST__(node.right)
 
+
 class PartitionPN:
 
     # We will use a BST to represent our partition of positive numbers from 0(included) to m(excluded)
@@ -111,7 +132,7 @@ class PartitionPN:
     # [0 , 100[  it will have 1 node : the root will be 100 .
     def __init__(self, m):
 
-        self.BT = BinaryTree(m,m)
+        self.BT = BinaryTree(m, m)
         self.smallest = 0
         self.biggest = m
 
@@ -171,24 +192,26 @@ class PartitionPN:
     def tranche(self, x):
         self.BT.put(x, x)
 
+
 class MainTest:
 
     @staticmethod
     def testBT():
-        bintree = BinaryTree(6,6)
+        bintree = BinaryTree(6, 6)
         bintree.put(5, 5)
         bintree.put(3, 3)
         bintree.put(7, 7)
-        bintree.printBST()
-
+        bintree.postfixTraversal(bintree.root)
+        print("\n")
+        bintree.prefixTraversal(bintree.root)
+        print("\n")
+        bintree.notfixTraversal(bintree.root)
     @staticmethod
     def testpartition(m):
         partition = PartitionPN(m)
         partition.rechercher(m)
-        partition.rechercher(m-1)
+        partition.rechercher(m - 1)
 
 
-
-
-#MainTest.testBT()
-MainTest.testpartition(100)
+MainTest.testBT()
+# MainTest.testpartition(100)
