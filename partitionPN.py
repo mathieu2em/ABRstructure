@@ -14,18 +14,22 @@ class BinaryTree:
             self.key = key
             self.N = N
 
-    def showExposition():
+    def showExposition(self):
+
         if self.root is None:
             print(0)
             return
         else:
-            return _showExposition(self.root)
+            return self._showExposition(self.root)
 
-    def _showExposition(node):
+    def _showExposition(self,node):
         if node is None:
+            print(0)
             return 0
         else:
-            print(min(_showExposition(node.left),_showExposition(node.right)))
+            exp = math.min(self.showExposition(node.left),self.showExposition(node.right))
+            print(exp)
+            return exp
 
     def size(self):
         return self.__size__(self.root)
