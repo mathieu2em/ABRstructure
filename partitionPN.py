@@ -37,8 +37,8 @@ class BinaryTree:
     def ancestorAssembler(self, u):
         list = []
 
-        def _ancestorAssembler(self, u, node):
-            if self.isAncestor(node):
+        def _ancestorAssembler(u, node):
+            if self.isAncestor(u, node):
                 list.append(node)
                 _ancestorAssembler(u, node.left)
                 _ancestorAssembler(u, node.right)
@@ -46,16 +46,29 @@ class BinaryTree:
         _ancestorAssembler(u, self.root)
         return list
 
-    def isAncestor(self, u):
-        return self._isAncestor(u, self.root)
-
-    def _isAncestor(self, u, node):
-        if node is u:
-            return True
+    def isAncestor(self, u, node):
+        if node is not None:
+            if node.key == u:
+                return True
         elif node is None:
             return False
         else:
             return self.isAncestor(u, node.left) or self.isAncestor(u, node.right)
+
+    # returns the lowest common ancestor of two nodes u and v
+    # todo
+    def lowestCommonAncestor(self,u,v):
+        uAncestors = self.ancestorAssembler(u)
+        vAncestors = self.ancestorAssembler(v)
+        for n in uAncestors:
+            print(n.value)
+        n = 0
+        m = 0
+        for n in uAncestors:
+            for m in vAncestors:
+                if uAncestors[n] == vAncestors[m]:
+                    return uAncestors[n]
+        return None
 
     def size(self):
         return self.__size__(self.root)
@@ -271,6 +284,7 @@ class MainTest:
         print("\n")
         bintree.prefixTraversal(bintree.root)
         bintree.showExposition()
+        print(bintree.lowestCommonAncestor(7, 3))#todo
 
     @staticmethod
     def testpartition(m):
