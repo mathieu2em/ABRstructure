@@ -14,6 +14,8 @@ class BinaryTree:
             self.key = key
             self.N = N
 
+    # the exposition is the smalleth path from a node x to a leaf ( a null node )
+    # this method will show the exposition of every node in a BST
     def showExposition(self):
 
         if self.root is None:
@@ -27,9 +29,33 @@ class BinaryTree:
             print(0)
             return 0
         else:
-            exp = min(self._showExposition(node.left), self._showExposition(node.right))+1
-            print("node ",node.value," is exposition ",exp)
+            exp = min(self._showExposition(node.left), self._showExposition(node.right)) + 1
+            print("node ", node.value, " is exposition ", exp)
             return exp
+
+    # this method will create a list with all the ancestors of a node and return it
+    def ancestorAssembler(self, u):
+        list = []
+
+        def _ancestorAssembler(self, u, node):
+            if self.isAncestor(node):
+                list.append(node)
+                _ancestorAssembler(u, node.left)
+                _ancestorAssembler(u, node.right)
+
+        _ancestorAssembler(u, self.root)
+        return list
+
+    def isAncestor(self, u):
+        return self._isAncestor(u, self.root)
+
+    def _isAncestor(self, u, node):
+        if node is u:
+            return True
+        elif node is None:
+            return False
+        else:
+            return self.isAncestor(u, node.left) or self.isAncestor(u, node.right)
 
     def size(self):
         return self.__size__(self.root)
@@ -77,7 +103,7 @@ class BinaryTree:
             x = x.left
         return y
 
-    #r return node with biggest key
+    # r return node with biggest key
     def treeMax(self, r):
         x = r
         y = None
@@ -87,7 +113,7 @@ class BinaryTree:
         return y
 
     # iterative way of getting a node value
-    def getIter(self, node , key):
+    def getIter(self, node, key):
         while node is not None and key != node.key:
             if key < node.key:
                 node = node.left
@@ -110,7 +136,6 @@ class BinaryTree:
             self.postfixTraversal(node.left)
             self.postfixTraversal(node.right)
             print(node.value)
-
 
     def deleteMin(self):
         if self.root is None:
@@ -246,6 +271,7 @@ class MainTest:
         print("\n")
         bintree.prefixTraversal(bintree.root)
         bintree.showExposition()
+
     @staticmethod
     def testpartition(m):
         partition = PartitionPN(m)
