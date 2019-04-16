@@ -22,13 +22,13 @@ class BinaryTree:
         else:
             return self._showExposition(self.root)
 
-    def _showExposition(self,node):
+    def _showExposition(self, node):
         if node is None:
             print(0)
             return 0
         else:
-            exp = math.min(self.showExposition(node.left),self.showExposition(node.right))
-            print(exp)
+            exp = min(self._showExposition(node.left), self._showExposition(node.right))+1
+            print("node ",node.value," is exposition ",exp)
             return exp
 
     def size(self):
@@ -69,7 +69,7 @@ class BinaryTree:
             return node
 
     # return node with smallest key
-    def min(self, r):
+    def treeMin(self, r):
         x = r
         y = None
         while x is not None:
@@ -78,7 +78,7 @@ class BinaryTree:
         return y
 
     #r return node with biggest key
-    def max(self, r):
+    def treeMax(self, r):
         x = r
         y = None
         while x is not None:
@@ -245,6 +245,7 @@ class MainTest:
         bintree.postfixTraversal(bintree.root)
         print("\n")
         bintree.prefixTraversal(bintree.root)
+        bintree.showExposition()
     @staticmethod
     def testpartition(m):
         partition = PartitionPN(m)
